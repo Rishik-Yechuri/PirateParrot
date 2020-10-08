@@ -19,6 +19,15 @@ namespace PirateParrot
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Rectangle parrotRectangle;
+        Texture2D parrotTexture;
+
+        Rectangle babyParrotRectangle;
+        Texture2D babyParrotTexture;
+
+        SpriteFont font1;
+        String thingToSay = "hey hows life";
+        int timer = 0;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -34,7 +43,8 @@ namespace PirateParrot
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            parrotRectangle = new Rectangle(20,150,140,200);
+            babyParrotRectangle = new Rectangle(375,240,149,150);
             base.Initialize();
         }
 
@@ -48,6 +58,9 @@ namespace PirateParrot
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            parrotTexture = this.Content.Load<Texture2D>("parrot");
+            babyParrotTexture = this.Content.Load<Texture2D>("babyparrot");
+            font1 = Content.Load<SpriteFont>("SpriteFont1");
         }
 
         /// <summary>
@@ -71,7 +84,7 @@ namespace PirateParrot
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            timer++;
             base.Update(gameTime);
         }
 
@@ -84,7 +97,14 @@ namespace PirateParrot
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            spriteBatch.Draw(parrotTexture,parrotRectangle,Color.White);
+            spriteBatch.Draw(babyParrotTexture, babyParrotRectangle, Color.White);
+            spriteBatch.DrawString(font1, "Sup", new Vector2(100, 100), Color.White);
+            if (timer >= 300) {
+                spriteBatch.DrawString(font1,"aarrrg!Sup",new Vector2(360,220),Color.White);
+            }
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
